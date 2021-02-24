@@ -13,6 +13,17 @@ namespace SinglePlayerPong
         Color playAreaColor;
         Texture2D blankTexture;
 
+        SpriteFont centerFont;
+        SpriteFont scoreFont;
+
+        Vector2 centreVector;
+        Vector2 scoreVector;
+        Vector2 subtitleVector;
+
+        string subtitle;
+        string scoreText;
+        string centre;
+
         Texture2D ballTexture;
         Rectangle ballRectangle;
         Color ballColor;
@@ -32,7 +43,7 @@ namespace SinglePlayerPong
         const int WAITING = 0, PLAYING = 1, PAUSED = 2, GAME_OVER = 3;
 
         int lives;
-
+        int score;
 
         public PongGame()
         {
@@ -66,6 +77,20 @@ namespace SinglePlayerPong
             paddleRectangle.X = (GraphicsDevice.Viewport.Width / 2) - (paddleRectangle.Width / 2);
             paddleColor = Color.Black;
 
+            centreVector.X = 0;
+            centreVector.Y = 0;
+            scoreVector.X = 0;
+            scoreVector.Y = 0;
+            subtitleVector.X = 0;
+            subtitleVector.Y = 0;
+
+            subtitle = "press [space] to start";
+            scoreText = "Score: " + score;
+            centre = "PONG";
+
+            lives = 3;
+            score = 3;
+
             keyb = Keyboard.GetState();
 
             base.Initialize();
@@ -77,6 +102,9 @@ namespace SinglePlayerPong
 
             ballTexture = Content.Load<Texture2D>("ball");
             paddleTexture = Content.Load<Texture2D>("paddle");
+
+            centerFont = Content.Load<SpriteFont>("PongFont");
+            scoreFont = Content.Load<SpriteFont>("ScoreFont");
 
         }
 
@@ -102,10 +130,17 @@ namespace SinglePlayerPong
                         ballRectangle.Y = playAreaRectangle.Top;
                         ballRectangle.X = (GraphicsDevice.Viewport.Width / 2) - (ballRectangle.Width / 2);
                     }
+
                     gameState = PLAYING;
                     ballXSpeed = playAreaRectangle.Width / 160;
                     ballYSpeed = playAreaRectangle.Width / 160;
                 }
+            }
+
+            if (gameState == PAUSED)
+            {
+                subtitle = "press [space] to continue";
+                centre = "PAUSED";
             }
 
             if (gameState == PLAYING || gameState == PAUSED)
@@ -164,15 +199,23 @@ namespace SinglePlayerPong
                     else
                     {
                         gameState = GAME_OVER;
+                        subtitle = "press [space] to start over";
+                        centre = "GAME OVER";
+                        paddleRectangle.Y = playAreaRectangle.Bottom - paddleRectangle.Height;
+                        paddleRectangle.X = (GraphicsDevice.Viewport.Width / 2) - (paddleRectangle.Width / 2);
                         ballYSpeed = 0;
                         ballXSpeed = 0;
                     }
                 }
             }
 
-
             ballRectangle.X += ballXSpeed;
             ballRectangle.Y += ballYSpeed;
+
+            centreVector.X = (GraphicsDevice.Viewport.Width / 2) - (centerFont.MeasureString(centre).X/2);
+            centreVector.Y = (GraphicsDevice.Viewport.Height / 2) - (centerFont.MeasureString(centre).Y);
+            subtitleVector.X = (GraphicsDevice.Viewport.Width / 2) - (scoreFont.MeasureString(subtitle).X / 2);
+            subtitleVector.Y = (GraphicsDevice.Viewport.Height / 2) + (scoreFont.MeasureString(subtitle).Y);
 
             base.Update(gameTime);
         }
@@ -182,6 +225,7 @@ namespace SinglePlayerPong
             GraphicsDevice.Clear(Color.LightSkyBlue);
 
             _spriteBatch.Begin();
+
             _spriteBatch.Draw(blankTexture, playAreaRectangle, playAreaColor);
             _spriteBatch.Draw(paddleTexture, paddleRectangle, paddleColor);
 
@@ -190,9 +234,13 @@ namespace SinglePlayerPong
                 _spriteBatch.Draw(ballTexture, ballRectangle, ballColor);
             }
 
+            if (gameState != PLAYING)
+            {
+                _spriteBatch.DrawString(centerFont, centre, centreVector, Color.Gray);
+                _spriteBatch.DrawString(scoreFont, subtitle, subtitleVector, Color.Gray);
+            }
+
             _spriteBatch.End();
-
-
 
             base.Draw(gameTime);
         }

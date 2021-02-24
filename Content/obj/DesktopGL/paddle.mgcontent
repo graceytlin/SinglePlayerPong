@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <SourceFile>C:/Users/grace/Documents/Programming/Monogame/SinglePlayerPong/Content/paddle.png</SourceFile>
-  <SourceTime>2021-02-19T15:46:29.2000179+00:00</SourceTime>
+  <SourceTime>2021-02-24T15:21:33.2810326+00:00</SourceTime>
   <DestFile>C:/Users/grace/Documents/Programming/Monogame/SinglePlayerPong/Content/bin/DesktopGL/paddle.xnb</DestFile>
-  <DestTime>2021-02-24T15:16:08.6462111+00:00</DestTime>
+  <DestTime>2021-02-24T17:54:21.0488525+00:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2020-08-10T16:17:54+01:00</ImporterTime>
   <Processor>TextureProcessor</Processor>

@@ -1,3 +1,5 @@
 Source File,Dest File,Processor Type,Content Type,Source File Size,Dest File Size,Build Seconds
 "C:/Users/grace/Documents/Programming/Monogame/SinglePlayerPong/Content/ball.png","C:/Users/grace/Documents/Programming/Monogame/SinglePlayerPong/Content/bin/DesktopGL/Content/ball.xnb","TextureProcessor","Texture2DContent",15054,1151413,0.1144195
 "C:/Users/grace/Documents/Programming/Monogame/SinglePlayerPong/Content/paddle.png","C:/Users/grace/Documents/Programming/Monogame/SinglePlayerPong/Content/bin/DesktopGL/Content/paddle.xnb","TextureProcessor","Texture2DContent",181,1151413,0.0179041
+"C:/Users/grace/Documents/Programming/Monogame/SinglePlayerPong/Content/PongFont.spritefont","C:/Users/grace/Documents/Programming/Monogame/SinglePlayerPong/Content/bin/DesktopGL/Content/PongFont.xnb","FontDescriptionProcessor","SpriteFontContent",2008,136226,0.1592432
+"C:/Users/grace/Documents/Programming/Monogame/SinglePlayerPong/Content/ScoreFont.spritefont","C:/Users/grace/Documents/Programming/Monogame/SinglePlayerPong/Content/bin/DesktopGL/Content/ScoreFont.xnb","FontDescriptionProcessor","SpriteFontContent",2008,37922,0.1456235
