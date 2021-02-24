@@ -20,3 +20,6 @@ C:\Users\grace\Documents\Programming\Monogame\SinglePlayerPong\obj\Debug\netcore
 C:\Users\grace\Documents\Programming\Monogame\SinglePlayerPong\obj\Debug\netcoreapp3.1\SinglePlayerPong.dll
 C:\Users\grace\Documents\Programming\Monogame\SinglePlayerPong\obj\Debug\netcoreapp3.1\SinglePlayerPong.pdb
 C:\Users\grace\Documents\Programming\Monogame\SinglePlayerPong\obj\Debug\netcoreapp3.1\SinglePlayerPong.genruntimeconfig.cache
+C:\Users\grace\Documents\Programming\Monogame\SinglePlayerPong\bin\Debug\netcoreapp3.1\Content\ball.xnb
+C:\Users\grace\Documents\Programming\Monogame\SinglePlayerPong\bin\Debug\netcoreapp3.1\Content\paddle.xnb
+C:\Users\grace\Documents\Programming\Monogame\SinglePlayerPong\obj\Debug\netcoreapp3.1\SinglePlayerPong.csprojAssemblyReference.cache
