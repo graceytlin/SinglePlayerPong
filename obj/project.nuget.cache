@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "LwbjRpl9aIZfr5DV+RPEXCVxm9yVMV7Vw2ShsxT9bkWBE4P9JS0L3xVkVjNkxexGe1lAqI2aJn+pVOUJ2j6mLw==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\grace\\Documents\\Programming\\Monogame\\SinglePlayerPong\\SinglePlayerPong.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\grace\\.nuget\\packages\\monogame.content.builder.task\\3.8.0.1641\\monogame.content.builder.task.3.8.0.1641.nupkg.sha512",
+    "C:\\Users\\grace\\.nuget\\packages\\monogame.framework.desktopgl\\3.8.0.1641\\monogame.framework.desktopgl.3.8.0.1641.nupkg.sha512"
+  ],
+  "logs": []
+}
