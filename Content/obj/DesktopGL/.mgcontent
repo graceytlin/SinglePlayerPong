@@ -6,8 +6,12 @@
   <SourceFiles>
     <File>C:/Users/grace/Documents/Programming/Monogame/SinglePlayerPong/Content/ball.png</File>
     <File>C:/Users/grace/Documents/Programming/Monogame/SinglePlayerPong/Content/paddle.png</File>
+    <File>C:/Users/grace/Documents/Programming/Monogame/SinglePlayerPong/Content/PongFont.spritefont</File>
+    <File>C:/Users/grace/Documents/Programming/Monogame/SinglePlayerPong/Content/ScoreFont.spritefont</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
   </DestFiles>
