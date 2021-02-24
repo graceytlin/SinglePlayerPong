@@ -19,10 +19,12 @@ namespace SinglePlayerPong
         Vector2 centreVector;
         Vector2 scoreVector;
         Vector2 subtitleVector;
+        Vector2 livesVector;
 
-        string subtitle;
+        string subtitleText;
         string scoreText;
-        string centre;
+        string centreText;
+        string livesText;
 
         Texture2D ballTexture;
         Rectangle ballRectangle;
@@ -41,6 +43,9 @@ namespace SinglePlayerPong
 
         int gameState;
         const int WAITING = 0, PLAYING = 1, PAUSED = 2, GAME_OVER = 3;
+
+        int scoreTimer;
+        const int TICKS = 7;
 
         int lives;
         int score;
@@ -77,19 +82,24 @@ namespace SinglePlayerPong
             paddleRectangle.X = (GraphicsDevice.Viewport.Width / 2) - (paddleRectangle.Width / 2);
             paddleColor = Color.Black;
 
+            lives = 3;
+            score = 0;
+
+            subtitleText = "press [space] to start";
+            scoreText = "score: " + score;
+            centreText = "PONG";
+            livesText = "lives: " + lives;
+
             centreVector.X = 0;
             centreVector.Y = 0;
-            scoreVector.X = 0;
-            scoreVector.Y = 0;
+            scoreVector.X = 5;
+            scoreVector.Y = 5;
             subtitleVector.X = 0;
             subtitleVector.Y = 0;
+            livesVector.X = 0;
+            livesVector.Y = 5;
 
-            subtitle = "press [space] to start";
-            scoreText = "Score: " + score;
-            centre = "PONG";
-
-            lives = 3;
-            score = 3;
+            scoreTimer = TICKS;
 
             keyb = Keyboard.GetState();
 
@@ -123,12 +133,14 @@ namespace SinglePlayerPong
                     if (gameState != PAUSED)
                     {
                         lives = 3;
+                        livesText = "lives: " + lives;
                     }
 
                     if (gameState == GAME_OVER)
                     {
                         ballRectangle.Y = playAreaRectangle.Top;
                         ballRectangle.X = (GraphicsDevice.Viewport.Width / 2) - (ballRectangle.Width / 2);
+                        score = 0;
                     }
 
                     gameState = PLAYING;
@@ -139,8 +151,8 @@ namespace SinglePlayerPong
 
             if (gameState == PAUSED)
             {
-                subtitle = "press [space] to continue";
-                centre = "PAUSED";
+                subtitleText = "press [space] to continue";
+                centreText = "PAUSED";
             }
 
             if (gameState == PLAYING || gameState == PAUSED)
@@ -161,6 +173,7 @@ namespace SinglePlayerPong
 
             if (gameState == PLAYING)
             {
+                score++;
                 if (paddleRectangle.Left < playAreaRectangle.Left)
                     paddleRectangle.X = playAreaRectangle.Left;
                 if (paddleRectangle.Right > playAreaRectangle.Right)
@@ -194,28 +207,39 @@ namespace SinglePlayerPong
                         ballRectangle.X = (GraphicsDevice.Viewport.Width / 2) - (ballRectangle.Width / 2);
                         ballYSpeed = 0;
                         ballXSpeed = 0;
-                        lives -= 1;
                     }
                     else
                     {
                         gameState = GAME_OVER;
-                        subtitle = "press [space] to start over";
-                        centre = "GAME OVER";
+                        subtitleText = "press [space] to start over";
+                        centreText = "GAME OVER";
                         paddleRectangle.Y = playAreaRectangle.Bottom - paddleRectangle.Height;
                         paddleRectangle.X = (GraphicsDevice.Viewport.Width / 2) - (paddleRectangle.Width / 2);
                         ballYSpeed = 0;
                         ballXSpeed = 0;
                     }
+
+                    lives -= 1;
+                    livesText = "lives: " + lives;
                 }
             }
 
             ballRectangle.X += ballXSpeed;
             ballRectangle.Y += ballYSpeed;
 
-            centreVector.X = (GraphicsDevice.Viewport.Width / 2) - (centerFont.MeasureString(centre).X/2);
-            centreVector.Y = (GraphicsDevice.Viewport.Height / 2) - (centerFont.MeasureString(centre).Y);
-            subtitleVector.X = (GraphicsDevice.Viewport.Width / 2) - (scoreFont.MeasureString(subtitle).X / 2);
-            subtitleVector.Y = (GraphicsDevice.Viewport.Height / 2) + (scoreFont.MeasureString(subtitle).Y);
+            scoreTimer--;
+
+            if (scoreTimer == 0)
+            {
+                scoreTimer = TICKS;
+                scoreText = "score: " + score;
+            }
+
+            centreVector.X = (GraphicsDevice.Viewport.Width / 2) - (centerFont.MeasureString(centreText).X/2);
+            centreVector.Y = (GraphicsDevice.Viewport.Height / 2) - (centerFont.MeasureString(centreText).Y);
+            subtitleVector.X = (GraphicsDevice.Viewport.Width / 2) - (scoreFont.MeasureString(subtitleText).X / 2);
+            subtitleVector.Y = (GraphicsDevice.Viewport.Height / 2) + (scoreFont.MeasureString(subtitleText).Y);
+            livesVector.X = GraphicsDevice.Viewport.Bounds.Right - scoreFont.MeasureString(livesText).X - 5;
 
             base.Update(gameTime);
         }
@@ -234,10 +258,16 @@ namespace SinglePlayerPong
                 _spriteBatch.Draw(ballTexture, ballRectangle, ballColor);
             }
 
+            if (gameState != WAITING)
+            {
+                _spriteBatch.DrawString(scoreFont, scoreText, scoreVector, Color.Black);
+                _spriteBatch.DrawString(scoreFont, livesText, livesVector, Color.Black);
+            }
+
             if (gameState != PLAYING)
             {
-                _spriteBatch.DrawString(centerFont, centre, centreVector, Color.Gray);
-                _spriteBatch.DrawString(scoreFont, subtitle, subtitleVector, Color.Gray);
+                _spriteBatch.DrawString(centerFont, centreText, centreVector, Color.Gray);
+                _spriteBatch.DrawString(scoreFont, subtitleText, subtitleVector, Color.Gray);
             }
 
             _spriteBatch.End();
