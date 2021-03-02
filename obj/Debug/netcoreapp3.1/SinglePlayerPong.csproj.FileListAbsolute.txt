@@ -25,3 +25,4 @@ C:\Users\grace\Documents\Programming\Monogame\SinglePlayerPong\bin\Debug\netcore
 C:\Users\grace\Documents\Programming\Monogame\SinglePlayerPong\obj\Debug\netcoreapp3.1\SinglePlayerPong.csprojAssemblyReference.cache
 C:\Users\grace\Documents\Programming\Monogame\SinglePlayerPong\bin\Debug\netcoreapp3.1\Content\PongFont.xnb
 C:\Users\grace\Documents\Programming\Monogame\SinglePlayerPong\bin\Debug\netcoreapp3.1\Content\ScoreFont.xnb
+C:\Users\grace\Documents\Programming\Monogame\SinglePlayerPong\bin\Debug\netcoreapp3.1\Content\splashscreen.xnb

@@ -12,6 +12,7 @@ namespace SinglePlayerPong
         Rectangle playAreaRectangle;
         Color playAreaColor;
         Texture2D blankTexture;
+        Texture2D splashScreen;
 
         SpriteFont centerFont;
         SpriteFont scoreFont;
@@ -39,10 +40,14 @@ namespace SinglePlayerPong
         Color paddleColor;
 
         GamePadState pad1;
+        GamePadState prevState;
         KeyboardState keyb;
+        KeyboardState prevKeyb;
+
+        bool startPressed;
 
         int gameState;
-        const int WAITING = 0, PLAYING = 1, PAUSED = 2, GAME_OVER = 3;
+        const int WAITING = 0, PLAYING = 1, PAUSED = 2, GAME_OVER = 3, SPLASH = 4;
 
         int scoreTimer;
         const int TICKS = 7;
@@ -59,7 +64,7 @@ namespace SinglePlayerPong
 
         protected override void Initialize()
         {
-            gameState = WAITING;
+            gameState = SPLASH;
 
             playAreaRectangle = new Rectangle(50, 40, 700, 400);
             playAreaColor = Color.Honeydew;
@@ -101,14 +106,14 @@ namespace SinglePlayerPong
 
             scoreTimer = TICKS;
 
-            keyb = Keyboard.GetState();
-
             base.Initialize();
         }
 
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
+
+            splashScreen = Content.Load<Texture2D>("splashscreen");
 
             ballTexture = Content.Load<Texture2D>("ball");
             paddleTexture = Content.Load<Texture2D>("paddle");
@@ -126,27 +131,34 @@ namespace SinglePlayerPong
             if (capabilities.IsConnected)
                 pad1 = GamePad.GetState(PlayerIndex.One);
 
-            if (gameState != PLAYING)
-            { 
-                if (keyb.IsKeyDown(Keys.Space) || pad1.Buttons.Start == ButtonState.Pressed)
+            if (gameState == SPLASH || gameState == GAME_OVER)
+            {
+                if ((keyb.IsKeyDown(Keys.Space) && prevKeyb.IsKeyUp(Keys.Space)) || (pad1.Buttons.Start == ButtonState.Pressed && prevState.Buttons.Start == ButtonState.Released))
                 {
-                    if (gameState != PAUSED)
-                    {
-                        lives = 3;
-                        livesText = "lives: " + lives;
-                    }
-
                     if (gameState == GAME_OVER)
                     {
                         ballRectangle.Y = playAreaRectangle.Top;
                         ballRectangle.X = (GraphicsDevice.Viewport.Width / 2) - (ballRectangle.Width / 2);
                         score = 0;
+                        subtitleText = "press [space] to start";
+                        centreText = "PONG";
                     }
 
-                    gameState = PLAYING;
-                    ballXSpeed = playAreaRectangle.Width / 160;
-                    ballYSpeed = playAreaRectangle.Width / 160;
+                    gameState = WAITING;
                 }
+            }
+            else if ((keyb.IsKeyDown(Keys.Space) && prevKeyb.IsKeyUp(Keys.Space)) || (pad1.Buttons.Start == ButtonState.Pressed && prevState.Buttons.Start == ButtonState.Released))
+            {
+                if (gameState != PAUSED)
+                {
+                    lives = 3;
+                    livesText = "lives: " + lives;
+                }
+
+                ballXSpeed = playAreaRectangle.Width / 160;
+                ballYSpeed = playAreaRectangle.Width / 160;
+
+                gameState = PLAYING;
             }
 
             if (gameState == PAUSED)
@@ -166,14 +178,7 @@ namespace SinglePlayerPong
                 {
                     paddleRectangle.X += paddleSpeed;
                 }
-            }
 
-            if ((gameState == WAITING || gameState == GAME_OVER) && (keyb.IsKeyDown(Keys.Escape) || pad1.Buttons.B == ButtonState.Pressed))
-                Exit();
-
-            if (gameState == PLAYING)
-            {
-                score++;
                 if (paddleRectangle.Left < playAreaRectangle.Left)
                     paddleRectangle.X = playAreaRectangle.Left;
                 if (paddleRectangle.Right > playAreaRectangle.Right)
@@ -185,6 +190,14 @@ namespace SinglePlayerPong
                     ballRectangle.X = playAreaRectangle.Right - ballRectangle.Width;
                 if (ballRectangle.Top < playAreaRectangle.Top)
                     ballRectangle.Y = playAreaRectangle.Top;
+            }
+
+            if ((gameState == WAITING || gameState == GAME_OVER || gameState == SPLASH) && (keyb.IsKeyDown(Keys.Escape) || pad1.Buttons.B == ButtonState.Pressed))
+                Exit();
+
+            if (gameState == PLAYING)
+            {
+                score++;
 
                 if (ballRectangle.X == playAreaRectangle.Left || ballRectangle.X == (playAreaRectangle.Right - ballRectangle.Width))
                     ballXSpeed *= -1;
@@ -241,6 +254,9 @@ namespace SinglePlayerPong
             subtitleVector.Y = (GraphicsDevice.Viewport.Height / 2) + (scoreFont.MeasureString(subtitleText).Y);
             livesVector.X = GraphicsDevice.Viewport.Bounds.Right - scoreFont.MeasureString(livesText).X - 5;
 
+            prevState = pad1;
+            prevKeyb = keyb;
+
             base.Update(gameTime);
         }
 
@@ -253,18 +269,23 @@ namespace SinglePlayerPong
             _spriteBatch.Draw(blankTexture, playAreaRectangle, playAreaColor);
             _spriteBatch.Draw(paddleTexture, paddleRectangle, paddleColor);
 
+            if (gameState == SPLASH)
+            {
+                _spriteBatch.Draw(splashScreen, GraphicsDevice.Viewport.Bounds, Color.White);
+            }
+
             if (gameState == PLAYING || gameState == GAME_OVER)
             {
                 _spriteBatch.Draw(ballTexture, ballRectangle, ballColor);
             }
 
-            if (gameState != WAITING)
+            if (gameState != WAITING && gameState != SPLASH)
             {
                 _spriteBatch.DrawString(scoreFont, scoreText, scoreVector, Color.Black);
                 _spriteBatch.DrawString(scoreFont, livesText, livesVector, Color.Black);
             }
 
-            if (gameState != PLAYING)
+            if (gameState != PLAYING && gameState != SPLASH)
             {
                 _spriteBatch.DrawString(centerFont, centreText, centreVector, Color.Gray);
                 _spriteBatch.DrawString(scoreFont, subtitleText, subtitleVector, Color.Gray);
