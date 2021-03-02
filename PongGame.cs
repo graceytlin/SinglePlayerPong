@@ -154,11 +154,14 @@ namespace SinglePlayerPong
                     lives = 3;
                     livesText = "lives: " + lives;
                 }
+                
+                if (gameState != PLAYING)
+                {
+                    ballXSpeed = playAreaRectangle.Width / 160;
+                    ballYSpeed = playAreaRectangle.Width / 160;
 
-                ballXSpeed = playAreaRectangle.Width / 160;
-                ballYSpeed = playAreaRectangle.Width / 160;
-
-                gameState = PLAYING;
+                    gameState = PLAYING;
+                }
             }
 
             if (gameState == PAUSED)
