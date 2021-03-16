@@ -26,3 +26,7 @@ C:\Users\grace\Documents\Programming\Monogame\SinglePlayerPong\obj\Debug\netcore
 C:\Users\grace\Documents\Programming\Monogame\SinglePlayerPong\bin\Debug\netcoreapp3.1\Content\PongFont.xnb
 C:\Users\grace\Documents\Programming\Monogame\SinglePlayerPong\bin\Debug\netcoreapp3.1\Content\ScoreFont.xnb
 C:\Users\grace\Documents\Programming\Monogame\SinglePlayerPong\bin\Debug\netcoreapp3.1\Content\splashscreen.xnb
+C:\Users\grace\Documents\Programming\Monogame\SinglePlayerPong\bin\Debug\netcoreapp3.1\Content\Audio\MissSound.xnb
+C:\Users\grace\Documents\Programming\Monogame\SinglePlayerPong\bin\Debug\netcoreapp3.1\Content\Audio\PaddleBounceSound.xnb
+C:\Users\grace\Documents\Programming\Monogame\SinglePlayerPong\bin\Debug\netcoreapp3.1\Content\Audio\StartSound.xnb
+C:\Users\grace\Documents\Programming\Monogame\SinglePlayerPong\bin\Debug\netcoreapp3.1\Content\Audio\WallBounceSound.xnb

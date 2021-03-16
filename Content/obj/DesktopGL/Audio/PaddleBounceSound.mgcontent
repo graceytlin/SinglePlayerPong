@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PipelineBuildEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <SourceFile>C:/Users/grace/Documents/Programming/Monogame/SinglePlayerPong/Content/Audio/PaddleBounceSound.wav</SourceFile>
+  <SourceTime>2021-03-16T21:48:45.04607+00:00</SourceTime>
+  <DestFile>C:/Users/grace/Documents/Programming/Monogame/SinglePlayerPong/Content/bin/DesktopGL/Audio/PaddleBounceSound.xnb</DestFile>
+  <DestTime>2021-03-16T21:51:59.0668357+00:00</DestTime>
+  <Importer>WavImporter</Importer>
+  <ImporterTime>2020-08-10T16:17:54+01:00</ImporterTime>
+  <Processor>SoundEffectProcessor</Processor>
+  <ProcessorTime>2020-08-10T16:17:54+01:00</ProcessorTime>
+  <Parameters>
+    <Key>Quality</Key>
+    <Value>Best</Value>
+  </Parameters>
+  <Dependencies />
+  <BuildAsset />
+  <BuildOutput />
+</PipelineBuildEvent>
