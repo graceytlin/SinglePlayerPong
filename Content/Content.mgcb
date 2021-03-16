@@ -13,6 +13,30 @@
 
 #---------------------------------- Content ---------------------------------#
 
+#begin Audio/MissSound.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/MissSound.wav
+
+#begin Audio/PaddleBounceSound.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/PaddleBounceSound.wav
+
+#begin Audio/StartSound.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/StartSound.wav
+
+#begin Audio/WallBounceSound.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/WallBounceSound.wav
+
 #begin ball.png
 /importer:TextureImporter
 /processor:TextureProcessor

@@ -4,6 +4,10 @@
   <Platform>DesktopGL</Platform>
   <Config />
   <SourceFiles>
+    <File>C:/Users/grace/Documents/Programming/Monogame/SinglePlayerPong/Content/Audio/MissSound.wav</File>
+    <File>C:/Users/grace/Documents/Programming/Monogame/SinglePlayerPong/Content/Audio/PaddleBounceSound.wav</File>
+    <File>C:/Users/grace/Documents/Programming/Monogame/SinglePlayerPong/Content/Audio/StartSound.wav</File>
+    <File>C:/Users/grace/Documents/Programming/Monogame/SinglePlayerPong/Content/Audio/WallBounceSound.wav</File>
     <File>C:/Users/grace/Documents/Programming/Monogame/SinglePlayerPong/Content/ball.png</File>
     <File>C:/Users/grace/Documents/Programming/Monogame/SinglePlayerPong/Content/paddle.png</File>
     <File>C:/Users/grace/Documents/Programming/Monogame/SinglePlayerPong/Content/PongFont.spritefont</File>
@@ -11,6 +15,10 @@
     <File>C:/Users/grace/Documents/Programming/Monogame/SinglePlayerPong/Content/splashscreen.png</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />

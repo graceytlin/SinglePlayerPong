@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Audio;
 
 namespace SinglePlayerPong
 {
@@ -21,6 +22,11 @@ namespace SinglePlayerPong
         Vector2 scoreVector;
         Vector2 subtitleVector;
         Vector2 livesVector;
+
+        SoundEffect paddleBounce;
+        SoundEffect missSound;
+        SoundEffect wallBounce;
+        SoundEffect startSound;
 
         string subtitleText;
         string scoreText;
@@ -43,8 +49,6 @@ namespace SinglePlayerPong
         GamePadState prevState;
         KeyboardState keyb;
         KeyboardState prevKeyb;
-
-        bool startPressed;
 
         int gameState;
         const int WAITING = 0, PLAYING = 1, PAUSED = 2, GAME_OVER = 3, SPLASH = 4;
@@ -121,6 +125,11 @@ namespace SinglePlayerPong
             centerFont = Content.Load<SpriteFont>("PongFont");
             scoreFont = Content.Load<SpriteFont>("ScoreFont");
 
+            paddleBounce = Content.Load<SoundEffect>("Audio/PaddleBounceSound");
+            wallBounce = Content.Load<SoundEffect>("Audio/WallBounceSound");
+            startSound = Content.Load<SoundEffect>("Audio/StartSound");
+            missSound = Content.Load<SoundEffect>("Audio/MissSound");
+
         }
 
         protected override void Update(GameTime gameTime)
@@ -145,14 +154,16 @@ namespace SinglePlayerPong
                     }
 
                     gameState = WAITING;
+                    startSound.Play(1, 0, 0);
                 }
             }
             else if ((keyb.IsKeyDown(Keys.Space) && prevKeyb.IsKeyUp(Keys.Space)) || (pad1.Buttons.Start == ButtonState.Pressed && prevState.Buttons.Start == ButtonState.Released))
             {
-                if (gameState != PAUSED)
+                if (gameState != PAUSED && gameState != PLAYING)
                 {
                     lives = 3;
                     livesText = "lives: " + lives;
+                    startSound.Play(1, 0, 0);
                 }
                 
                 if (gameState != PLAYING)
@@ -161,6 +172,7 @@ namespace SinglePlayerPong
                     ballYSpeed = playAreaRectangle.Width / 160;
 
                     gameState = PLAYING;
+                    startSound.Play(1, 0, 0);
                 }
             }
 
@@ -182,17 +194,29 @@ namespace SinglePlayerPong
                     paddleRectangle.X += paddleSpeed;
                 }
 
-                if (paddleRectangle.Left < playAreaRectangle.Left)
+                if (paddleRectangle.Left <= playAreaRectangle.Left)
                     paddleRectangle.X = playAreaRectangle.Left;
-                if (paddleRectangle.Right > playAreaRectangle.Right)
+                if (paddleRectangle.Right >= playAreaRectangle.Right)
                     paddleRectangle.X = playAreaRectangle.Right - paddleRectangle.Width;
 
-                if (ballRectangle.Left < playAreaRectangle.Left)
+                if (ballRectangle.Left <= playAreaRectangle.Left)
+                {
                     ballRectangle.X = playAreaRectangle.Left;
-                if (ballRectangle.Right > playAreaRectangle.Right)
+                    wallBounce.Play(1, 0, 0);
+                }
+                    
+                    
+                if (ballRectangle.Right >= playAreaRectangle.Right)
+                {
                     ballRectangle.X = playAreaRectangle.Right - ballRectangle.Width;
+                    wallBounce.Play(1, 0, 0);
+                }
+                    
                 if (ballRectangle.Top < playAreaRectangle.Top)
+                {
                     ballRectangle.Y = playAreaRectangle.Top;
+                    wallBounce.Play(1, 0, 0);
+                }
             }
 
             if ((gameState == WAITING || gameState == GAME_OVER || gameState == SPLASH) && (keyb.IsKeyDown(Keys.Escape) || pad1.Buttons.B == ButtonState.Pressed))
@@ -212,6 +236,7 @@ namespace SinglePlayerPong
                 {
                     ballYSpeed *= -1;
                     ballRectangle.Y = paddleRectangle.Top - ballRectangle.Height;
+                    paddleBounce.Play();
                 }
 
                 if (ballRectangle.Bottom > playAreaRectangle.Bottom)
@@ -226,6 +251,7 @@ namespace SinglePlayerPong
                     }
                     else
                     {
+                        missSound.Play();
                         gameState = GAME_OVER;
                         subtitleText = "press [space] to start over";
                         centreText = "GAME OVER";
